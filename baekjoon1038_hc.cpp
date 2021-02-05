@@ -1,44 +1,7 @@
 #include <stdio.h>
-#include <string>
-#include <math.h>
 #include <map>
 
 using namespace std;
-
-bool is_reducing(string n)
-{
-    for(long long i=0;i<n.length()-1;i++){
-        if(n.at(i) <= n.at(i+1)){
-            return false;
-        }
-    }
-    return true;
-}
-
-long long next_number(string str)
-{
-    long long n = stol(str);
-
-    while(true){
-        bool reducing = true;
-        str = to_string(n);
-        for(long long i=0;i<str.length()-1;i++){
-            if(str.at(i) <= str.at(i+1)){
-                long long p = str.length() - i - 1;
-                n += pow(10, p);
-                n -= pow(10, p-1) * (str.at(i+1) - '0');
-                reducing = false;
-                break;
-            }
-        }
-        if(reducing){
-            break;
-        }
-    }
-
-    return n;
-}
-
 
 int main()
 {
@@ -46,6 +9,7 @@ int main()
 
     answer[0] =  0;
     answer[1] =  1;
+    answer[2] =  2;
     answer[3] =  3;
     answer[4] =  4;
     answer[5] =  5;
@@ -1067,61 +1031,13 @@ int main()
     answer[1021] =  987654321;
     answer[1022] =  (long long)9876543210ll;
 
-#if 0
-    long long ccc=0;
-    long long aa=0;
-    while(true){
-        if(is_reducing(to_string(aa))){
-            printf("%d : %d\n", ccc++, aa);
-            aa++;
-        }
-        else{
-            if(aa == 987654322){
-                printf("aaa");
-            }
-            aa = next_number(to_string(aa));
-        }
-    }
-    return 0;
-#endif
-
     int N;
     scanf("%d", &N);
-
     if(answer.find(N) == answer.end()){
         printf("-1\n");
     }
     else{
         printf("%lld\n", answer[N]);
     }
-    return 0;
-
-    if(N >=1023){
-        printf("-1");
-        return 0;
-    }
-
-    if(N <= 10){
-        printf("%d", N);
-        return 0;
-    }
-
-    int n = 11;
-    for(long long i=20;;){
-        if(is_reducing(to_string(i))){
-            if(n++ == N){
-                printf("%lld", i); 
-                return 0;
-            }
-            i++;
-        }
-        else{
-            i = next_number(to_string(i));
-        }
-        if(i>9876543210){
-            break;
-        }
-    }
-    printf("-1"); 
     return 0;
 }
