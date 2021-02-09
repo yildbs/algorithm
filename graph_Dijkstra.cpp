@@ -51,33 +51,30 @@ void dijkstra(int start, vector<vector<int>> dist)
 void dijkstra_practice(int start, vector<vector<int>> dist)
 {
     int N = dist.size();
-    vector<int> d;d.resize(N);
-    for(auto &_d : d){
-        _d = INF;
-    }
+    vector<int> distance(N, INF);
+
     for(int i=0;i<N;i++){
-        d[i] = dist[start][i];
+        distance[i] = dist[start][i];
     }
 
-    vector<bool> v;v.resize(N);
-    for(auto &&_v : v){
-        _v = false;
-    }
+    vector<bool> visited(N, false);
+    visited[start] = true;
 
-    for(int n=0;n<N-1;n++){
-        int index = get_closest_index(d, v);
-        if(index == -1){ break; }
-        v[index] = true;
-
-        for(int i=0;i<N;i++){
-            if(d[i] > d[index] + dist[index][i]){
-                d[i] = d[index] + dist[index][i];
+    for(int i=0;i<N-1;i++){
+        int index = get_closest_index(distance, visited);
+        if(index == -1){
+            break;
+        }
+        for(int j=0;j<N;j++){
+            if(distance[j] > distance[index] + dist[index][j]){
+                distance[j] = distance[index] + dist[index][j];
             }
         }
+        visited[index] = true;
     }
 
-    for(int n=0;n<N-1;n++){
-        printf("%d ", d[n]);
+    for(int i=0;i<N;i++){
+        printf("%d\n", distance[i]);
     }
 }
 
@@ -146,18 +143,17 @@ int main()
 
     ////////////////////////
 
-    priority_queue<pair<int, int>> q;
-    q.push(pair<int, int>(10, 10));
-    q.push(pair<int, int>(9, 10));
-    q.push(pair<int, int>(11, 10));
-    q.push(pair<int, int>(15, 10));
-    q.push(pair<int, int>(1, 10));
-    q.push(pair<int, int>(6, 10));
-    while(q.empty() == false){
-        printf("%d\n", q.top());
-        q.pop();
-    }
-
+    // priority_queue<pair<int, int>> q;
+    // q.push(pair<int, int>(10, 10));
+    // q.push(pair<int, int>(9, 10));
+    // q.push(pair<int, int>(11, 10));
+    // q.push(pair<int, int>(15, 10));
+    // q.push(pair<int, int>(1, 10));
+    // q.push(pair<int, int>(6, 10));
+    // while(q.empty() == false){
+    //     printf("%d\n", q.top());
+    //     q.pop();
+    // }
 
     // dijkstra(0, dist);
     printf("Answer\n");
