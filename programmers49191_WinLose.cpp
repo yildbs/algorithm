@@ -17,7 +17,6 @@ int solution(int n, vector<vector<int>> results)
         graph[r[1]][r[0]] = -1; //lost
     }
 
-
     //플루이드 워셜 알고리즘
     for(int i=1;i<=n;i++){ // b
         for(int j=1;j<=n;j++){ // a
@@ -40,7 +39,7 @@ int solution(int n, vector<vector<int>> results)
     //i를 기준으로
     for(int i=1;i<=n;i++){
         int count_1 = 0;
-        //i가 j에게 이이거나 지는 경우
+        //i가 j에게 이기거나 지는 경우
         for(int j=1;j<=n;j++){
             if(graph[i][j] == 1 || graph[i][j] == -1){
                 count_1 ++;
