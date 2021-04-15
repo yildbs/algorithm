@@ -10,53 +10,38 @@ const int INF = 0xFFFFFF;
 
 int main()
 {
-    int NofVertices, NofEdges;
-    cin >> NofVertices >> NofEdges;
+    int V, E;
+    cin >> V >> E;
+    int K;
+    cin >> K;
 
-    int start;
-    cin >> start;
+    vector<vector<pair<int, int>>> graph(V+1);
 
-    vector<pair<int, int>> graph[20001];
-    for(int i=0;i<NofEdges;i++){
+    for(int i=0;i<E;i++){
         int u, v, w;
         cin >> u >> v >> w;
 
-        graph[u].push_back(pair<int, int>(w, v)); // u에서 v로 w 비용
+        graph[u].push_back(pair<int, int>(v, w));
     }
 
-    vector<int> distance(NofVertices + 1, INF);
-    distance[start] = 0;
+    vector<int> dist(V+1, INF);
+    dist[K] = 0;
 
     priority_queue<pair<int, int>> pq;
-    pq.push(pair<int, int>(0, start));
+    pq.push(pair<int, int>(0, K));
 
     while(pq.empty() == false){
         auto next = pq.top();pq.pop();
         auto next_index = next.second;
         auto next_cost = -next.first;
-        if(next_cost > distance[next_index]){
-            continue;
-        }
 
-        for(int i=0;i<graph[next_index].size();i++){
-            auto target = graph[next_index].at(i);
-            auto target_index = target.second;
-            auto target_cost = target.first;
-            if(distance[target_index] > distance[next_index] + target_cost){
-                distance[target_index] = distance[next_index] + target_cost;
-                pq.push(pair<int, int>(-distance[target_index], target_index));
+        for(auto target : graph[next_index]){
+            auto target_index = target.first;
+            auto target_cost = target.second;
+
+            if(dist[target_index] > dist[next_index] + target_cost){
+
             }
-        }
-    }
-
-    for(int i=1;i<=NofVertices;i++){
-        if(distance[i] == INF){
-            // cout << "INF" << endl;
-            printf("INF\n");
-        }
-        else{
-            // cout << distance[i] << endl;
-            printf("%d\n", distance[i]);
         }
     }
 }
